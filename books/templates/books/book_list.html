@@ -1,0 +1,52 @@
+{% extends 'books/base.html' %}
+
+{% block content %}
+
+<div class="card" style="width: 100%">
+    <div class="card-header">
+        Books 
+         <small class="float-sm-right">
+        <a href="{% url 'books:book-add' %}" class="btn btn-primary"> New Book <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+ </a>
+        </small>
+
+    </div>
+
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Pages</td>
+                <td>Created at</td>
+                <td>Updated at</td>
+                <td>View</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for book in object_list %}
+                <tr>
+                    <td>{{ book.pk }}</td>
+                    <td>{{ book.name }}</td>
+                    <td>{{ book.pages }}</td>
+                    <td>{{ book.created_at }}</td>
+                    <td>{{ book.updated_at }}</td>
+                    <td><a href="{% url 'books:book-view' book.id %}">view <i class="fa fa-eye" aria-hidden="true"></i>
+                        <i class="fa fa-search-plus" aria-hidden="true"></i>
+
+                     </td>
+                    <td><a href="{% url 'books:book-edit' book.id %}">edit <i class="fa fa-pencil" aria-hidden="true"></i> </td>
+                    <td><a href="{% url 'books:book-delete' book.id %}">delete <i class="fa fa-trash-o" aria-hidden="true"></i>
+</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

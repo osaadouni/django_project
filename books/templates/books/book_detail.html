@@ -1,0 +1,24 @@
+{% extends 'books/base.html' %}
+
+{% block content %}
+
+<div class="card" style="width: 100%">
+    <div class="card-header">
+        Book Details
+        <small class="float-sm-right"> 
+        <a href="{{ object.get_absolute_url }}" class="btn btn-info"> Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
+        </small>
+    </div>
+
+    <div class="card-body">
+
+        <h2>Name: {{object.name}}</h2>
+        Pages: {{ object.pages }}
+    </div>
+    <div class="card-footer">
+        <small class="text-muted float-sm-right">
+        <a href="{% url 'books:book-list' %}" class="btn btn-primary"> List <i class="fa fa-list" aria-hidden="true"></i> </a>
+        </small>
+    </div>
+</div>
+{% endblock %}
