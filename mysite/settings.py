@@ -33,6 +33,8 @@ ALLOWED_HOSTS = ['testserver', 'localhost', '127.0.0.1']
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'books.apps.BooksConfig', 
+    'employees.apps.EmployeesConfig', 
+    'crispy_forms',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -135,3 +137,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# User bookstrap 4 for the style to use
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

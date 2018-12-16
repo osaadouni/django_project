@@ -1,0 +1,34 @@
+{% extends 'employees/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="card" style="width: 100%">
+    <div class="card-header">
+       {{ title }}
+        <small class="float-sm-right">
+        <a href="{% url 'employees:employee-list' %}" class="btn btn-primary"> List <i class="fa fa-list" aria-hidden="true"></i> </a>
+
+        </small>
+    </div>
+
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {# {{ form.as_p }} #}
+            {{ form|crispy }}
+            <small class="float-sm-right">
+               <button type="submit" class="btn btn-danger"> Save <i class="fa fa-floppy-o"></i> </button>
+            </small>
+        </form>
+    </div>
+    <div class="card-footer">
+        <small class="text-muted float-sm-right">
+        </small>
+    </div>
+</div>
+{% endblock %}
+
+
+

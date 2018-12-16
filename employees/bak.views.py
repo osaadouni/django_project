@@ -1,0 +1,48 @@
+from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator 
+
+
+from employees.forms import EmployeeForm
+from employees.models import Employee
+
+def employee_list(request, template_name='employees/employee_list.html'):
+    #employees = Employee.objects.all()
+    employee_list = Employee.objects.order_by('-pk')
+    paginator = Paginator(employee_list, 2)
+
+    page = request.GET.get('page')
+    employees = paginator.get_page(page)
+ 
+    context = { 'object_list': employees }
+    return render(request, template_name, context)
+
+
+def employee_view(request, pk, template_name='employees/employee_detail.html'):
+    employee = get_object_or_404(Employee, pk=pk)
+    context = {'object': employee}
+    return render(request, template_name, context)
+
+def employee_create(request, template_name='employees/employee_form.html'):
+    form = EmployeeForm(request.POST or None)
+    if form.is_valid(): 
+        form.save()
+        return redirect('employees:employee-list')
+    context = {'form': form, 'title': 'Add Employee'}
+    return render(request, template_name, context)
+
+
+def employee_update(request, pk, template_name='employees/employee_form.html'):
+    employee = get_object_or_404(Employee, pk=pk)
+    form = EmployeeForm(request.POST or None, instance=employee)
+    if form.is_valid():
+        form.save()
+        return redirect('employees:employee-list')
+    return render(request, template_name, {'form': form, 'title': 'Edit Employee'})
+
+def employee_delete(request, pk, template_name='employees/employee_confirm_delete.html'):
+    employee = get_object_or_404(Employee, pk=pk)
+    if request.method == 'POST':
+        employee.delete()
+        return redirect('employees:employee-list')
+    return render(request, template_name, {'object': employee})
+

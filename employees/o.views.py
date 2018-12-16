@@ -12,7 +12,7 @@ class EmployeeList(ListView):
     model = Employee  # same as Employee.objects.all() 
     #queryset = Employee.objects.order_by('-pk')
     ordering = ['-pk']
-    paginate_by = 5
+    paginate_by = 2
     #paginator_class = Paginator 
     #template_name = 'employees/employees.html' # to override the default template 
     context_object_name = "employee_list"
