@@ -1,0 +1,134 @@
+{% extends 'projects/base.html' %}
+
+{% block content %}
+
+<div class="card" style="width: 100%">
+    <div class="card-header">
+        Project Details
+        <small class="float-sm-right"> 
+        <a href="{% url 'projects:project-list' %}" class="btn btn-primary"> List <i class="fa fa-list" aria-hidden="true"></i> </a>
+        </small>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                ID:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.pk }}
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Name :
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.name }}
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Client:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.client.name }}
+            </div>
+        </div>
+         
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                State:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.state }}
+            </div>
+        </div>
+         
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                CRN:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.client_ref_number }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                IRN:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.invoice_number }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Price Type:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.get_price_type_display }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Single/Ongoing:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.get_kind_display }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Fixed Hours:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.fixed_hours }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Manager:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.manager }}
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Creation Date:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.created_at }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Modification Date:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.updated_at }}
+            </div>
+        </div>
+
+
+
+    </div>
+    <div class="card-footer">
+        <small class="text-muted float-sm-right">
+        <a href="{{ object.get_absolute_url }}" class="btn btn-info"> Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
+        </small>
+    </div>
+</div>
+{% endblock %}

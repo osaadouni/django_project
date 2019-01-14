@@ -1,0 +1,82 @@
+{% extends 'departments/base.html' %}
+
+{% block content %}
+
+<div class="card" style="width: 100%">
+    <div class="card-header">
+        Departments
+         <small class="float-sm-right">
+        <a href="{% url 'departments:department-add' %}" class="btn btn-primary"> New Department <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+ </a>
+        </small>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if object_list %}
+
+        <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Created at</td>
+                <td>Updated at</td>
+                <td>View</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for department in object_list %}
+                <tr>
+                    <td>{{ department.pk }}</td>
+                    <td>{{ department.name }}</td>
+                    <td>{{ department.created_at }}</td>
+                    <td>{{ department.updated_at }}</td>
+                    <td>
+                        <a href="{% url 'departments:department-view' department.id %}" class="btn btn-info btn-sm">View <i class="fa fa-eye" aria-hidden="true"></i>
+                        {# <i class="fa fa-search-plus" aria-hidden="true"></i> #}
+
+                     </td>
+                    <td><a href="{% url 'departments:department-edit' department.id %}" class="btn btn-secondary btn-sm">Edit <i class="fa fa-pencil" aria-hidden="true"></i> </td>
+                    <td><a href="{% url 'departments:department-delete' department.id %}" class="btn btn-danger btn-sm">Delete <i class="fa fa-trash-o" aria-hidden="true"></i>
+</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+
+        {% endif %}
+
+
+        {# The pagination Section  #}
+
+       {% if is_paginated %}
+          <ul class="pagination">
+            {% if page_obj.has_previous %}
+              <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+              <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+              {% if page_obj.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+              {% else %}
+                <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+              {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+              <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a></li>
+            {% else %}
+              <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+            {% endif %}
+          </ul>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

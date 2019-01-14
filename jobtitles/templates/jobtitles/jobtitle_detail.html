@@ -1,0 +1,50 @@
+{% extends 'jobtitles/base.html' %}
+
+{% block content %}
+
+<div class="card" style="width: 100%">
+    <div class="card-header">
+        Job Title Details
+        <small class="float-sm-right"> 
+        <a href="{{ object.get_absolute_url }}" class="btn btn-info"> Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
+        </small>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Title :
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.name }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Creation Date:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.created_at }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Modification Date:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.updated_at }}
+            </div>
+        </div>
+
+
+
+    </div>
+    <div class="card-footer">
+        <small class="text-muted float-sm-right">
+        <a href="{% url 'jobtitles:jobtitle-list' %}" class="btn btn-primary"> List <i class="fa fa-list" aria-hidden="true"></i> </a>
+        </small>
+    </div>
+</div>
+{% endblock %}

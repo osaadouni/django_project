@@ -1,0 +1,33 @@
+{% extends 'projects/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="card" style="width: 100%">
+    <div class="card-header">
+       Edit State
+        <small class="float-sm-right">
+        <a href="{% url 'projects:state-list' %}" class="btn btn-primary"> List <i class="fa fa-list" aria-hidden="true"></i> </a>
+
+        </small>
+    </div>
+
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <small class="float-sm-right">
+               <input type="submit" value="Submit" class="btn btn-danger" />
+            </small>
+        </form>
+    </div>
+    <div class="card-footer">
+        <small class="text-muted float-sm-right">
+        </small>
+    </div>
+</div>
+{% endblock %}
+
+
+

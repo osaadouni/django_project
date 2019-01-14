@@ -34,7 +34,14 @@ INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'books.apps.BooksConfig', 
     'employees.apps.EmployeesConfig', 
+    'jobtitles.apps.JobtitlesConfig', 
+    'clients.apps.ClientsConfig', 
+    'projects.apps.ProjectsConfig', 
     'crispy_forms',
+    'django_countries',
+    'quickstart', 
+    'activities',
+    'departments',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -88,13 +95,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'CON_MAX_AGE': 3600,
-        'NAME': 'polls', 
+        'NAME': 'timereg_db', 
         'USER': 'django', 
         'PASSWORD': 'UPT6over!', 
         'HOST': 'localhost', 
         'PORT': '3306',
         'TEST': {
-            'NAME': 'test_polls',
+            'NAME': 'test_employees',
         }
     }
 }
@@ -137,6 +144,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # User bookstrap 4 for the style to use
