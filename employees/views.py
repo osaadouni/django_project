@@ -3,6 +3,9 @@ from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator 
+from django.http import JsonResponse, HttpResponse
+from django.template.response import TemplateResponse
+from django.template.loader import render_to_string
 
 
 from employees.models import Employee
@@ -31,6 +34,10 @@ class EmployeeList(ListView):
         context['object_list'] = employees  
         return context  
 
+    def render_to_response(self, context):
+        template = self.template_name
+        rendered = render_to_string(template, context, self.request)
+        return JsonResponse({"data": rendered})
 
 class EmployeeView(DetailView):
     model = Employee

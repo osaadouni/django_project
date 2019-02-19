@@ -37,11 +37,17 @@ INSTALLED_APPS = [
     'jobtitles.apps.JobtitlesConfig', 
     'clients.apps.ClientsConfig', 
     'projects.apps.ProjectsConfig', 
-    'crispy_forms',
     'django_countries',
     'quickstart', 
     'activities',
     'departments',
+    'accounts',
+    'dashboard',
+
+    'crispy_forms',
+    'django_extensions', 
+    'widget_tweaks',
+    'bootstrap4',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -144,6 +150,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -151,3 +160,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # User bookstrap 4 for the style to use
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+# Redirect user after logout 
+LOGOUT_REDIRECT_URL = 'home'
+
+# Redirect after login
+LOGIN_REDIRECT_URL = 'home'
+
+# Login URL
+LOGIN_URL = 'accounts:login'

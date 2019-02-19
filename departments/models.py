@@ -10,7 +10,7 @@ class Department(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "Department %s" % self.name
+        return "%s" % self.name
 
     def get_absolute_url(self):
         return reverse("departments:department-edit", kwargs={'pk': self.pk})

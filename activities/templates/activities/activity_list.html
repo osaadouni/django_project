@@ -16,17 +16,19 @@
 
         {% if object_list %}
 
+        <div class="table-responsive">
+
         <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <td>ID</td>
                 <td>Name</td>
-                <td>Client</td>
-                <td>Status</td>
-                <td>CRN</td>
-                <td>IRN</td>
-                <td>Bill</td>
-                <td>Manager</td>
+                <td>Change per hour</td>
+                <td>Sold per hour</td>
+                <td>VAT</td>
+                <td>Knowledge level</td>
+                <td>Category</td>
+                <td>Department</td>
                 <td>Created at</td>
                 <td>Updated at</td>
                 <td>View</td>
@@ -40,12 +42,19 @@
                 <tr>
                     <td>{{ activity.pk }}</td>
                     <td>{{ activity.name }}</td>
-                    <td>{{ activity.client }}</td>
-                    <td>{{ activity.state }}</td>
-                    <td>{{ activity.client_ref_number }}</td>
-                    <td>{{ activity.invoice_number }}</td>
-                    <td>{{ activity.get_price_type_display }}</td>
-                    <td>{{ activity.manager }}</td>
+                    <td>{{ activity.charge_per_hour }}</td>
+                    <td>{{ activity.sold_per_hour }}</td>
+                    <td>{{ activity.vat }}</td>
+                    <td>{{ activity.get_skill_level_display }}</td>
+                    <td>{{ activity.category }}</td>
+                    <td>
+                        {# {{ activity.department }} #}
+                        <ul>
+                        {% for dept in activity.department.all %}
+                            <li>{{ dept }}</li>
+                        {% endfor %}
+                        </ul>
+                    </td>
                     <td>{{ activity.created_at }}</td>
                     <td>{{ activity.updated_at }}</td>
                     <td>
@@ -60,6 +69,7 @@
             {% endfor %}
         </tbody>
         </table>
+        </div>
 
         {% endif %}
 

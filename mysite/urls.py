@@ -17,9 +17,11 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.auth import views as auth_views 
+from dashboard import views 
 
 urlpatterns = [
-    #path('', include('books.urls')), 
+    path('', views.DashboardView.as_view(), name='home'),
     path('polls/', include('polls.urls')), 
     path('employees/', include('employees.urls')), 
     path('jobtitles/', include('jobtitles.urls')), 
@@ -28,6 +30,11 @@ urlpatterns = [
     path('activities/', include('activities.urls')), 
     path('departments/', include('departments.urls')), 
     path('books/', include('books.urls')), 
+
+
+    #path('accounts/', include('django.contrib.auth.urls')), 
+    path('accounts/', include('accounts.urls')), 
+
     path('admin/', admin.site.urls),
 ]
 
