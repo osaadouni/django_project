@@ -1,16 +1,17 @@
-{% extends 'employees/base.html' %}
 
+{% extends 'employees/includes/main_wrapper.html' %} #}
+    
 {% load crispy_forms_tags %}
 
-{% block content %}
+{% block wrapper %}
+
 
 <div class="card" style="width: 100%">
     <div class="card-header">
        Edit Employee
-        <small class="float-sm-right">
-        <a href="{% url 'employees:employee-list' %}" class="btn btn-primary"> List <i class="fa fa-list" aria-hidden="true"></i> </a>
 
-        </small>
+       {% include 'employees/includes/btn_list.html' %}
+        
     </div>
 
     <div class="card-body">

@@ -1,4 +1,4 @@
-{# {% extends 'projects/base.html' %} #}
+{% extends 'projects/base.html' %}
 
 {% block content %}
 
@@ -66,8 +66,27 @@
 
         {# The pagination Section  #}
 
-        {% url "projects:project-list" as ref_url %}
-        {% include 'includes/pagination_records.html' with ref_url=ref_url %}
+       {% if is_paginated %}
+          <ul class="pagination">
+            {% if page_obj.has_previous %}
+              <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+              <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+              {% if page_obj.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+              {% else %}
+                <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+              {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+              <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a></li>
+            {% else %}
+              <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+            {% endif %}
+          </ul>
+        {% endif %}
 
     </div>
 </div>

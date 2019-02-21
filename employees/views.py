@@ -35,12 +35,17 @@ class EmployeeList(ListView):
         return context  
 
     def render_to_response(self, context):
-        template = self.template_name
-        rendered = render_to_string(template, context, self.request)
+        rendered = render_to_string(self.template_name, context, self.request)
         return JsonResponse({"data": rendered})
 
 class EmployeeView(DetailView):
     model = Employee
+    template_name = 'employees/employee_detail.html' # to override the default template 
+
+
+    def render_to_response(self, context):
+        rendered = render_to_string(self.template_name, context, self.request)
+        return JsonResponse({"data": rendered})
 
 
 class EmployeeCreate(CreateView):
@@ -48,16 +53,33 @@ class EmployeeCreate(CreateView):
     form_class = EmployeeForm
     template_name = 'employees/employee_create_form.html'
     success_url = reverse_lazy('employees:employee-list')
+   
+    def render_to_response(self, context):
+        rendered = render_to_string(self.template_name, context, self.request)
+        return JsonResponse({'data': rendered})
+
+    #def get_success_url(self):
+    #    return reverse_lazy('employees:employee-list')
+         
 
 class EmployeeUpdate(UpdateView):
     model = Employee
     form_class = EmployeeForm
     template_name = 'employees/employee_edit_form.html'
     success_url = reverse_lazy('employees:employee-list')
+
+    def render_to_response(self, context):
+        rendered = render_to_string(self.template_name, context, self.request)
+        return JsonResponse({'data': rendered}) 
  
 class EmployeeDelete(DeleteView):
     model = Employee
+    template_name = 'employees/employee_confirm_delete.html'
     success_url = reverse_lazy('employees:employee-list')
+
+    def render_to_response(self, context):
+        rendered = render_to_string(self.template_name, context, self.request)
+        return JsonResponse({'data': rendered}) 
 
 
 

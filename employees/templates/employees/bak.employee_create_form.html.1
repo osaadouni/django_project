@@ -1,21 +1,21 @@
-{% extends 'employees/includes/main_wrapper.html' %} #}
-
+{% extends 'employees/base.html' %}
 {% load crispy_forms_tags %}
-
-{% block wrapper %}
+{% block content %}
 
 <div class="card" style="width: 100%">
     <div class="card-header">
        New Employee
-       {% include 'employees/includes/btn_list.html' %}
+        <small class="float-sm-right">
+        <a href="{% url 'employees:employee-list' %}" class="btn btn-primary"> List <i class="fa fa-list" aria-hidden="true"></i> </a>
+        </small>
     </div>
 
     <div class="card-body">
-        <form method="post" data-action-url="{% url 'employees:employee-add' %}" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
             <small class="float-sm-right">
-                 <button  type="button" class="btn btn-danger btn-form-action">Submit</button>
+                <input type="submit" value="Submit" class="btn btn-danger" />
             </small>
         </form>
     </div>
@@ -24,7 +24,6 @@
         </small>
     </div>
 </div>
-
 {% endblock %}
 
 
