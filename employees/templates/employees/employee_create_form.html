@@ -1,4 +1,4 @@
-{% extends 'employees/includes/main_wrapper.html' %} #}
+{% extends 'includes/main_wrapper.html' %} #}
 
 {% load crispy_forms_tags %}
 
@@ -11,11 +11,11 @@
     </div>
 
     <div class="card-body">
-        <form method="post" data-action-url="{% url 'employees:employee-add' %}" enctype="multipart/form-data">
+        <form method="post" data-action-url="{% url 'employees:employee-add' %}" enctype="multipart/form-data" class="form-input">
             {% csrf_token %}
             {{ form|crispy }}
             <small class="float-sm-right">
-                 <button  type="button" class="btn btn-danger btn-form-action">Submit</button>
+                 <button  type="submit" class="btn btn-danger btn-form-action">Submit</button>
             </small>
         </form>
     </div>

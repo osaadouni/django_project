@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Boards</li>
+{% endblock %}
+
+{% block content %}
+
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+  <li class="nav-item">
+    <a class="nav-link active" id="project-tab" data-toggle="tab" href="#projects" data-url="{% url 'projects:project-list' %}" role="tab" aria-controls="home" aria-selected="true">Projects</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" id="employee-tab" data-toggle="tab" href="#employees" data-url="{% url 'employees:employee-list' %}" role="tab" aria-controls="home" aria-selected="true">Employees</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane" role="tabpanel" aria-labelledby="contact-tab"> show </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+
+getTabContent = function(url) {
+
+    console.log('getTabContent('+url+')...');
+    var jqxhr = $.getJSON(url, function(data) {
+          console.log('success');
+          //console.log(data.data);
+         $('div#myTabContent').find('div.tab-pane').html(data.data).show();
+      })
+      .done(function() { 
+         console.log('done');
+      })
+      .fail(function( jqxhr, textStatus, error ) {
+         console.log('Request failed: ' + err);
+      })
+      .always(function() { 
+         console.log('always');
+      });
+ 
+    // set another completion function 
+    //$('div#myTabContent').html('hoi').show();
+
+};
+
+$(document).ready(function() {
+
+  $('#myTab a').on('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var url = $(this).attr('data-url');
+    var id = $(this).attr('id');
+    console.log(id+  ' clicked, url='+url);
+    $(this).tab('show');
+
+    getTabContent(url);
+  });
+
+  $('body').on('click', 'ul.pagination a.page-link', function(e) { 
+      e.preventDefault();
+      console.log("clicked");
+      var url = $(this).attr('data-url');
+      getTabContent(url);
+  });
+  $('body').on('click', 'div.tab-content a.btn-item-action', function(e) { 
+      e.preventDefault();
+      console.log("clicked");
+      var url = $(this).attr('data-action-url');
+      console.log('data-url: ' + url);
+      getTabContent(url);
+  });
+
+  $('body').on('submit', 'div.tab-content form.form-input', function(e) { 
+    e.preventDefault();
+    console.log('form submitted');
+    console.log(this);
+    var url = $(this).attr('data-action-url');
+    console.log('data-url: ' + url);
+    var formData = new FormData(this);
+    console.log('formData:'); console.log(formData);
+    $.ajax({
+       url: url, 
+       type: 'POST', 
+       dataType: 'json', 
+       data: formData, 
+       contentType: false, 
+       processData: false, 
+       success: function(resp) { 
+        console.log(resp);
+        if (typeof undefined !== typeof resp.data) { 
+          $('div#myTabContent').find('div.tab-pane').html(resp.data).show();
+
+        }
+       }
+    });
+    /* $.post(url, formData, function(data) { 
+      console.log(data);
+      if (typeof undefined !== typeof data.data) { 
+        $('div#myTabContent').find('div.tab-pane').html(data.data).show();
+      }
+    }, 'json');
+    */
+
+
+  });
+
+  $('body').on('click', 'div.tab-content button.btn-form-action', function(e) { 
+      e.preventDefault();
+      console.log("clicked");
+      var form =$(this).closest('form');
+      console.log(form);
+      var url = form.attr('data-action-url');
+      console.log('data-url: ' + url);
+
+      var formData = new FormData(form.get(0));
+      console.log('formData:'); console.log(formData);
+      $.ajax({
+          url: url, 
+          type: 'POST', 
+          dataType: 'json', 
+          data: formData, 
+          contentType: false, 
+          processData: false, 
+          success: function(resp) { 
+              if (typeof undefined !== typeof resp.data) { 
+                  $('div#myTabContent').find('div.tab-pane').html(resp.data).show();
+              }
+          }
+      });
+  });
+});
+</script>
+{% endblock %}

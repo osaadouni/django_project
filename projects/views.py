@@ -47,6 +47,11 @@ class ProjectCreate(CreateView):
     template_name = 'projects/project_create_form.html'
     success_url = reverse_lazy('projects:project-list')
 
+    def render_to_response(self, context):
+        rendered = render_to_string(self.template_name, context, self.request)
+        return JsonResponse({'data': rendered})
+
+
 class ProjectUpdate(UpdateView):
     model = Project
     form_class = ProjectForm

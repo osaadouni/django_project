@@ -29,38 +29,6 @@
 
 
 
-{# 
-  <div class="row">
-    <div class="col-2"> 
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link active" href="{% url 'employees:employee-list' %}">Employees</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'clients:client-list' %}">Clients</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-
-      </ul>
-    </div>
-    <div class="col-10">
-       uu
-    </div>
-  </div>
-#}
-    
-
 {% endblock %}
 
 {% block javascript %}
@@ -108,9 +76,63 @@ $(document).ready(function() {
       var url = $(this).attr('data-url');
       getTabContent(url);
   });
-  $('body').on('click', 'div.tab-content a.btn-add-item', function(e) { 
+
+  $('body').on('click', 'div.tab-content a.btn-item-action', function(e) { 
       e.preventDefault();
       console.log("clicked");
+      var url = $(this).attr('data-action-url');
+      console.log('data-url: ' + url);
+      getTabContent(url);
+  });
+
+  $('body').on('submit', 'div.tab-content form.form-input', function(e) { 
+    e.preventDefault();
+    console.log('form submitted');
+    console.log(this);
+    var url = $(this).attr('data-action-url');
+    console.log('data-url: ' + url);
+    var formData = new FormData(this);
+    console.log('formData:'); console.log(formData);
+    $.ajax({
+       url: url, 
+       type: 'POST', 
+       dataType: 'json', 
+       data: formData, 
+       contentType: false, 
+       processData: false, 
+       success: function(resp) { 
+        console.log(resp);
+        if (typeof undefined !== typeof resp.data) { 
+          $('div#myTabContent').find('div.tab-pane').html(resp.data).show();
+
+        }
+       }
+    });
+  });
+
+  $('body').on('click', 'div.tab-content button.btn-form-action', function(e) { 
+      e.preventDefault();
+      console.log("clicked");
+      var form =$(this).closest('form');
+      console.log(form);
+      var url = form.attr('data-action-url');
+      console.log('data-url: ' + url);
+
+      var formData = new FormData(form.get(0));
+      console.log('formData:'); console.log(formData);
+      $.ajax({
+          url: url, 
+          type: 'POST', 
+          dataType: 'json', 
+          data: formData, 
+          contentType: false, 
+          processData: false, 
+          success: function(resp) { 
+              if (typeof undefined !== typeof resp.data) { 
+                  $('div#myTabContent').find('div.tab-pane').html(resp.data).show();
+              }
+          }
+      });
   });
 });
 </script>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -71,6 +71,19 @@ class EmployeeUpdate(UpdateView):
     def render_to_response(self, context):
         rendered = render_to_string(self.template_name, context, self.request)
         return JsonResponse({'data': rendered}) 
+
+    #def post(self, request, *args, **kwargs):
+    #    print('POST:')
+    #    print(request.POST)
+    #    print('FILES:')
+    #    print(request.FILES)
+    #    form = self.form_class(request.POST, request.FILES)
+    #    if form.is_valid():
+    #        form.save()
+    #        return redirect(self.success_url)
+    #    else:
+    #        return render(request, self.template_name, {'form': form})
+ 
  
 class EmployeeDelete(DeleteView):
     model = Employee

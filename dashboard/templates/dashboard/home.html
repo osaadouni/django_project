@@ -76,6 +76,7 @@ $(document).ready(function() {
       var url = $(this).attr('data-url');
       getTabContent(url);
   });
+
   $('body').on('click', 'div.tab-content a.btn-item-action', function(e) { 
       e.preventDefault();
       console.log("clicked");
@@ -84,21 +85,31 @@ $(document).ready(function() {
       getTabContent(url);
   });
 
-  $('body').on('click', 'div.tab-content button.btn-form-action', function(e) { 
-      e.preventDefault();
-      console.log("clicked");
-      var form = $(this).closest('form');
-      var url = form.attr('data-action-url');
-      console.log('data-url: ' + url);
-    
-      $.post(url, form.serialize(), function(data) { 
-         console.log(data);
-         if (typeof undefined !== typeof data.data) { 
-             $('div#myTabContent').find('div.tab-pane').html(data.data).show();
-         }
-      }, 'json');
+  $('body').on('submit', 'div.tab-content form.form-input', function(e) { 
+    e.preventDefault();
+    console.log('form submitted');
+    console.log(this);
+    var url = $(this).attr('data-action-url');
+    console.log('data-url: ' + url);
+    var formData = new FormData(this);
+    console.log('formData:'); console.log(formData);
+    $.ajax({
+       url: url, 
+       type: 'POST', 
+       dataType: 'json', 
+       data: formData, 
+       contentType: false, 
+       processData: false, 
+       success: function(resp) { 
+        console.log(resp);
+        if (typeof undefined !== typeof resp.data) { 
+          $('div#myTabContent').find('div.tab-pane').html(resp.data).show();
 
+        }
+       }
+    });
   });
+
 });
 </script>
 {% endblock %}

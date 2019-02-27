@@ -1,17 +1,16 @@
-{% extends 'projects/base.html' %}
+{% extends 'includes/main_wrapper.html' %} #}
 {% load crispy_forms_tags %}
-{% block content %}
+
+{% block wrapper %}
 
 <div class="card" style="width: 100%">
     <div class="card-header">
        New Project
-        <small class="float-sm-right">
-        <a href="{% url 'projects:project-list' %}" class="btn btn-primary"> Project list <i class="fa fa-list" aria-hidden="true"></i> </a>
-        </small>
+       {% include 'projects/includes/btn_list.html' %}
     </div>
 
     <div class="card-body">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" data-action-url="{% url 'projects:project-add' %}" enctype="multipart/form-data" class="form-input">
             {% csrf_token %}
             {{ form|crispy }}
             <small class="float-sm-right">

@@ -31,6 +31,7 @@ urlpatterns = [
     path('departments/', include('departments.urls')), 
     path('books/', include('books.urls')), 
 
+    path('simple_upload/', include('simple_upload.urls')), 
 
     #path('accounts/', include('django.contrib.auth.urls')), 
     path('accounts/', include('accounts.urls')), 

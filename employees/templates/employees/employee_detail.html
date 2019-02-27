@@ -1,4 +1,4 @@
-{% extends 'employees/includes/main_wrapper.html' %} #}
+{% extends 'includes/main_wrapper.html' %} #}
     
 {% load crispy_forms_tags %}
 
@@ -146,7 +146,7 @@
     <div class="card-footer">
 
         <small class="float-sm-right"> 
-        <a href="{{ object.get_absolute_url }}" class="btn btn-info"> Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
+        <a href="#" data-action-url="{{ object.get_absolute_url }}" class="btn btn-info btn-item-action"> Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
         </small>
 
     </div>

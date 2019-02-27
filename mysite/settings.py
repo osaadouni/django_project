@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'departments',
     'accounts',
     'dashboard',
+    'simple_upload',
 
     'crispy_forms',
     'django_extensions', 
