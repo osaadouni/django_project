@@ -39,6 +39,11 @@ class ProjectList(ListView):
 
 class ProjectView(DetailView):
     model = Project
+    template_name = 'projects/project_detail.html'
+
+    def render_to_response(self, context):
+        rendered = render_to_string(self.template_name, context, self.request)
+        return JsonResponse({'data': rendered})
 
 
 class ProjectCreate(CreateView):
@@ -58,11 +63,18 @@ class ProjectUpdate(UpdateView):
     template_name = 'projects/project_edit_form.html'
     success_url = reverse_lazy('projects:project-list')
 
+    def render_to_response(self, context):
+        rendered = render_to_string(self.template_name, context, self.request)
+        return JsonResponse({'data': rendered})
 
 class ProjectDelete(DeleteView):
     model = Project
     success_url = reverse_lazy('projects:project-list')
+    template_name = 'projects/project_confirm_delete.html'
              
+    def render_to_response(self, context):
+        rendered = render_to_string(self.template_name, context, self.request)
+        return JsonResponse({'data': rendered})
 
 
 """
