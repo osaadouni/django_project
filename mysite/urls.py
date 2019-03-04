@@ -22,6 +22,7 @@ from dashboard import views
 
 urlpatterns = [
     path('', views.DashboardView.as_view(), name='home'),
+    path('timereg/', include('timereg.urls')), 
     path('polls/', include('polls.urls')), 
     path('employees/', include('employees.urls')), 
     path('jobtitles/', include('jobtitles.urls')), 

@@ -5,6 +5,7 @@ from . import views
 app_name = 'projects'
 urlpatterns = [
     path('', views.ProjectList.as_view(), name='project-list'),
+    path('client/<int:client_id>', views.ProjectList.as_view(), name='client-project-list'),
     path('view/<int:pk>', views.ProjectView.as_view(), name='project-view'),
     path('add', views.ProjectCreate.as_view(), name='project-add'),
     path('edit/<int:pk>', views.ProjectUpdate.as_view(), name='project-edit'),

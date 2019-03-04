@@ -8,10 +8,21 @@
 <div class="card" style="width: 100%">
     <div class="card-header">
         Project list  
-         <small class="float-sm-right">
+        <small class="float-sm-right">
         <a href="#" data-action-url="{% url 'projects:project-add' %}" class="btn btn-primary btn-item-action"> New Project <i class="fa fa-plus-square-o" aria-hidden="true"></i>
  </a>
         </small>
+
+        {% if client_list %}
+        <small class="float-sm-right mr-2">
+           <select class="form-control client-filter" data-action-url="{% url 'projects:project-list' %}">
+                <option value="">Select client</option>
+            {% for client in client_list %}
+                <option value="{{ client.id }}" {% if client_id and client_id == client.id %} selected="selected" {% endif %}>{{ client.company_name }} - {{ client.name }} </option>
+            {% endfor %}
+           </select>
+        </small>
+        {% endif %}
 
     </div>
 
@@ -65,12 +76,18 @@
         </tbody>
         </table>
 
+        {% else %}
+            <div class="alert alert-warning"> #0 records found </div>
         {% endif %}
 
 
         {# The pagination Section  #}
 
-        {% url "projects:project-list" as ref_url %}
+        {% if client_id %}
+            {% url "projects:client-project-list" client_id as ref_url %}
+        {% else %}
+            {% url "projects:project-list" as ref_url %}
+        {% endif %}
         {% include 'includes/pagination_records.html' with ref_url=ref_url %}
 
     </div>

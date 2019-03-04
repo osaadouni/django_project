@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -7,27 +7,41 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 
 
-from projects.models import Project, ProjectState, ProjectPhase
+from .models import Project, ProjectState, ProjectPhase
 from .forms import ProjectForm, ProjectStateForm, ProjectPhaseForm
+from clients.models import Client
 
 
 class ProjectList(ListView):
-    model = Project
+    #model = Project
     ordering = ['-pk']
     paginate_by = 5
     template_name = 'projects/project_list.html'
     context_object_name = 'project_list'
 
+ 
+    def get_queryset(self):
+        client_id = self.kwargs.get('client_id', None)
+        if client_id: 
+            self.client = get_object_or_404(Client, pk=client_id)
+            return Project.objects.filter(client=self.client).order_by('-pk')
+        else: 
+            return Project.objects.order_by('-pk')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        project_list = Project.objects.order_by('-pk')
+        # project_list = Project.objects.order_by('-pk')
+        project_list = self.get_queryset() 
         paginator = Paginator(project_list, self.paginate_by)
-         
         page = self.request.GET.get('page')
-       
         projects = paginator.get_page(page)
- 
         context['object_list'] = projects
+        context['client_list'] = Client.objects.order_by('name')
+
+        client_id = self.kwargs.get('client_id', None)
+        if client_id: 
+            context['client_id'] = client_id
+
         return context
 
     def render_to_response(self, context):

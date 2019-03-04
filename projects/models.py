@@ -2,6 +2,7 @@ from django.db import models
 from random import randint 
 from django.urls import reverse
 
+from clients.models import Client
 
 class ProjectState(models.Model):
     name = models.CharField(max_length=50)
@@ -36,7 +37,7 @@ class Project(models.Model):
         ('going', 'Ongoing'),
     )
     
-    client = models.ForeignKey('clients.Client', on_delete=models.CASCADE, verbose_name="Who's the client?")
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name="Who's the client?")
     name = models.CharField(max_length=100, verbose_name="Project Name:")
     description = models.CharField(max_length=100, verbose_name="Short Description:")
     manager = models.ForeignKey('employees.Employee', models.SET_NULL, null=True, verbose_name="Project manager:") 
@@ -63,12 +64,10 @@ class Project(models.Model):
 
     def clean(self):
         # generate an automatic name field 
-        print(f"self.client : {self.client}")
-        self.name = '_'.join([self.client.name, str(randint(10000, 99999)), '_'.join(self.description.split())])
-        print(f"self.client : {self.client}")
-        print(f"self.description :{self.description}")
-        print(f"self.name : {self.name}")
-
+        try:
+            self.name = '_'.join([self.client.name, str(randint(10000, 99999)), '_'.join(self.description.split())])
+        except Project.client.RelatedObjectDoesNotExist:
+            self.name = '_'.join([str(randint(10000, 99999)), '_'.join(self.description.split())])
 
     #def save(self, *args, **kwargs):
     #    """

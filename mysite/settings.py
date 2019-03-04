@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'departments',
     'accounts',
     'dashboard',
+    'timereg',
     'simple_upload',
 
     'crispy_forms',
