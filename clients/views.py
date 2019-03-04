@@ -3,6 +3,8 @@ from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator 
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 
 from clients.models import Client
@@ -31,9 +33,17 @@ class ClientList(ListView):
         context['object_list'] = clients  
         return context  
 
+    def render_to_response(self, context):
+        rendered = render_to_string(self.template_name, context, self.request)
+        return JsonResponse({'data': rendered})
 
 class ClientView(DetailView):
     model = Client
+    template_name = 'clients/client_detail.html'
+
+    def render_to_response(self, context):
+        rendered = render_to_string(self.template_name, context, self.request)
+        return JsonResponse({'data': rendered})
 
 
 class ClientCreate(CreateView):
@@ -42,16 +52,29 @@ class ClientCreate(CreateView):
     template_name = 'clients/client_create_form.html'
     success_url = reverse_lazy('clients:client-list')
 
+    def render_to_response(self, context):
+        rendered = render_to_string(self.template_name, context, self.request)
+        return JsonResponse({'data': rendered})
+
+
 class ClientUpdate(UpdateView):
     model = Client
     form_class = ClientForm
     template_name = 'clients/client_edit_form.html'
     success_url = reverse_lazy('clients:client-list')
+
+    def render_to_response(self, context):
+        rendered = render_to_string(self.template_name, context, self.request)
+        return JsonResponse({'data': rendered})
  
 class ClientDelete(DeleteView):
     model = Client
     success_url = reverse_lazy('clients:client-list')
+    template_name = 'clients/client_confirm_delete.html'
 
+    def render_to_response(self, context):
+        rendered = render_to_string(self.template_name, context, self.request)
+        return JsonResponse({'data': rendered})
 
 
 class AboutView(TemplateView):

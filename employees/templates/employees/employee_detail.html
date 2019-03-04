@@ -7,7 +7,8 @@
 <div class="card" style="width: 100%">
     <div class="card-header">
         Employee Details
-        {% include "employees/includes/btn_list.html" %}
+        {% url 'employees:employee-list' as list_url %}
+        {% include 'includes/btn_list.html' with list_url=list_url list_label='Employees' %}
     </div>
 
     <div class="card-body">

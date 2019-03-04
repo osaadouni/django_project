@@ -6,7 +6,8 @@
 <div class="card" style="width: 100%">
     <div class="card-header">
        New Project
-       {% include 'projects/includes/btn_list.html' %}
+       {% url 'projects:project-list' as list_url %}
+       {% include 'includes/btn_list.html' with list_url=list_url list_label='Projects' %}
     </div>
 
     <div class="card-body">

@@ -1,13 +1,14 @@
-{% extends 'activitys/base.html' %}
+{% extends 'includes/main_wrapper.html' %}
 
-{% block content %}
+{% block wrapper %}
 
 <div class="card" style="width: 100%">
     <div class="card-header">
-        Activity Details
-        <small class="float-sm-right"> 
-        <a href="{% url 'activitys:activity-list' %}" class="btn btn-primary"> List <i class="fa fa-list" aria-hidden="true"></i> </a>
-        </small>
+       Activity Details
+       {% url 'activities:activity-list' as list_url %}
+       {% include 'includes/btn_list.html' with list_url=list_url list_label='Activities' %}
+
+
     </div>
 
     <div class="card-body">
@@ -32,77 +33,61 @@
         
         <div class="row">
             <div class="col-md-3 col-sm-3">
-                Client:
+                Charge per hour:
             </div>
             <div class="col-md-3 col-sm-3">
-                {{ object.client.name }}
+                {{ object.charge_per_hour }}
             </div>
         </div>
          
         <div class="row">
             <div class="col-md-3 col-sm-3">
-                State:
+                Sold per hour:
             </div>
             <div class="col-md-3 col-sm-3">
-                {{ object.state }}
+                {{ object.sold_per_hour }}
             </div>
         </div>
          
         <div class="row">
             <div class="col-md-3 col-sm-3">
-                CRN:
+                VAT:
             </div>
             <div class="col-md-3 col-sm-3">
-                {{ object.client_ref_number }}
+                {{ object.vat }}
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-3 col-sm-3">
-                IRN:
+                Skill Level:
             </div>
             <div class="col-md-3 col-sm-3">
-                {{ object.invoice_number }}
+                {{ object.get_skill_level_display }}
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-3 col-sm-3">
-                Price Type:
+                Category:
             </div>
             <div class="col-md-3 col-sm-3">
-                {{ object.get_price_type_display }}
+                {{ object.category }}
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-3 col-sm-3">
-                Single/Ongoing:
+                Department(s):
             </div>
             <div class="col-md-3 col-sm-3">
-                {{ object.get_kind_display }}
+                <ul>
+                {% for dept in object.department.all %}
+                  <li>{{ dept }}</li>
+                {% endfor %}
+                </ul>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-3 col-sm-3">
-                Fixed Hours:
-            </div>
-            <div class="col-md-3 col-sm-3">
-                {{ object.fixed_hours }}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-3 col-sm-3">
-                Manager:
-            </div>
-            <div class="col-md-3 col-sm-3">
-                {{ object.manager }}
-            </div>
-        </div>
-
-
 
         <div class="row">
             <div class="col-md-3 col-sm-3">
@@ -127,7 +112,7 @@
     </div>
     <div class="card-footer">
         <small class="text-muted float-sm-right">
-        <a href="{{ object.get_absolute_url }}" class="btn btn-info"> Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
+        <a href="#" data-action-url="{{ object.get_absolute_url }}" class="btn btn-info btn-item-action"> Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
         </small>
     </div>
 </div>

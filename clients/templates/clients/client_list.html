@@ -1,12 +1,12 @@
-{% extends 'clients/base.html' %}
+{% extends 'includes/main_wrapper.html' %}
 
-{% block content %}
+{% block wrapper %}
 
 <div class="card" style="width: 100%">
     <div class="card-header">
         Client list  
          <small class="float-sm-right">
-        <a href="{% url 'clients:client-add' %}" class="btn btn-primary"> New Client <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+        <a href="#" data-action-url="{% url 'clients:client-add' %}" class="btn btn-primary btn-item-action"> New Client <i class="fa fa-plus-square-o" aria-hidden="true"></i>
  </a>
         </small>
 
@@ -41,12 +41,12 @@
                     <td>{{ client.created_at }}</td>
                     <td>{{ client.updated_at }}</td>
                     <td>
-                        <a href="{% url 'clients:client-view' client.id %}" class="btn btn-info btn-sm">View <i class="fa fa-eye" aria-hidden="true"></i>
+                        <a href="#" data-action-url="{% url 'clients:client-view' client.id %}" class="btn btn-info btn-sm btn-item-action">View <i class="fa fa-eye" aria-hidden="true"></i>
                         {# <i class="fa fa-search-plus" aria-hidden="true"></i> #}
 
                      </td>
-                    <td><a href="{% url 'clients:client-edit' client.id %}" class="btn btn-secondary btn-sm">Edit <i class="fa fa-pencil" aria-hidden="true"></i> </td>
-                    <td><a href="{% url 'clients:client-delete' client.id %}" class="btn btn-danger btn-sm">Delete <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    <td><a href="#" data-action-url="{% url 'clients:client-edit' client.id %}" class="btn btn-secondary btn-sm btn-item-action">Edit <i class="fa fa-pencil" aria-hidden="true"></i> </td>
+                    <td><a href="#" data-action-url="{% url 'clients:client-delete' client.id %}" class="btn btn-danger btn-sm btn-item-action">Delete <i class="fa fa-trash-o" aria-hidden="true"></i>
 </td>
                 </tr>
             {% endfor %}
@@ -57,28 +57,8 @@
 
 
         {# The pagination Section  #}
-
-       {% if is_paginated %}
-          <ul class="pagination">
-            {% if page_obj.has_previous %}
-              <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-            {% else %}
-              <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
-            {% endif %}
-            {% for i in paginator.page_range %}
-              {% if page_obj.number == i %}
-                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
-              {% else %}
-                <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
-              {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-              <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a></li>
-            {% else %}
-              <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
-            {% endif %}
-          </ul>
-        {% endif %}
+        {% url 'clients:client-list' as ref_url %}
+        {% include 'includes/pagination_records.html' with ref_url=ref_url %}
 
     </div>
 </div>
