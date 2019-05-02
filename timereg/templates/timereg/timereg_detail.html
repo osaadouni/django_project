@@ -1,0 +1,124 @@
+{% extends 'includes/main_wrapper.html' %}
+
+{% block wrapper %}
+
+<div class="card" style="width: 100%">
+    <div class="card-header">
+        TimeReg Details
+        {% url "timereg:timereg-list" as ref_list_url %}
+        {% include 'includes/btn_list.html' with ref_url=ref_list_url %}
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                ID:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.pk }}
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Client :
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.client.name }}
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Project:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.project }}
+            </div>
+        </div>
+         
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Activity:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.activity }}
+            </div>
+        </div>
+         
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Description:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.description }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Bill:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.bill }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Date:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.date }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Time:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.time }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                User:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.created_by }}
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Creation Date:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.created_at }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                Modification Date:
+            </div>
+            <div class="col-md-3 col-sm-3">
+                {{ object.updated_at }}
+            </div>
+        </div>
+
+
+
+    </div>
+    <div class="card-footer">
+        <small class="text-muted float-sm-right">
+        <a href="#"  data-action-url="{{ object.get_absolute_url }}" class="btn btn-info btn-item-action"> Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
+        </small>
+    </div>
+</div>
+{% endblock %}

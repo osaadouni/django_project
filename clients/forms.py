@@ -10,3 +10,6 @@ class ClientForm(forms.ModelForm):
             'address': forms.Textarea(attrs={'rows':4, 'cols': 15}),
         }
 
+
+class ClientSearchForm(forms.Form):
+    keyword = forms.CharField(required=False, label='Search Client')

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,12 +44,14 @@ INSTALLED_APPS = [
     'departments',
     'accounts',
     'dashboard',
+    'timereg',
     'simple_upload',
 
     'crispy_forms',
     'django_extensions', 
     'widget_tweaks',
     'bootstrap4',
+    'bootstrap_datepicker_plus',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -107,12 +110,19 @@ DATABASES = {
         'PASSWORD': 'UPT6over!', 
         'HOST': 'localhost', 
         'PORT': '3306',
-        'TEST': {
-            'NAME': 'test_employees',
-        }
+        #'TEST': {
+            #'NAME': 'test_employees',
+        #}
     }
 }
 
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -161,6 +171,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # User bookstrap 4 for the style to use
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+BOOTSTAP4 = {
+# 'include_jquery': True,
+}
 
 
 # Redirect user after logout 

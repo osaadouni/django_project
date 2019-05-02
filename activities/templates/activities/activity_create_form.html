@@ -1,18 +1,19 @@
-{% extends 'activities/base.html' %}
+{% extends 'includes/main_wrapper.html' %} #}
+
 {% load crispy_forms_tags %}
-{% block content %}
+
+{% block wrapper %}
 
 <div class="card" style="width: 100%">
     <div class="card-header">
        New Activity
-        <small class="float-sm-right">
-        <a href="{% url 'activities:activity-list' %}" class="btn btn-primary"> Activity list <i class="fa fa-list" aria-hidden="true"></i> </a>
-        </small>
+       {% url 'activities:activity-list' as ref_list_url %}
+       {% include 'includes/btn_list.html' with ref_url=ref_list_url %}
     </div>
 
     <div class="card-body">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
+        <form method="post" data-action-url="{% url 'activities:activity-add' %}" enctype="multipart/form-data" class="form-input">
+          {% csrf_token %}
             {{ form|crispy }}
             <small class="float-sm-right">
                 <input type="submit" value="Submit" class="btn btn-danger" />

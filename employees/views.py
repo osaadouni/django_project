@@ -94,7 +94,3 @@ class EmployeeDelete(DeleteView):
         rendered = render_to_string(self.template_name, context, self.request)
         return JsonResponse({'data': rendered}) 
 
-
-
-class AboutView(TemplateView):
-    template_name = 'about.html' 

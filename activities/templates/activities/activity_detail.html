@@ -1,13 +1,15 @@
-{% extends 'activitys/base.html' %}
+{% extends 'includes/main_wrapper.html' %} #}
 
-{% block content %}
+{% load crispy_forms_tags %}
+
+{% block wrapper %}
+
 
 <div class="card" style="width: 100%">
     <div class="card-header">
-        Activity Details
-        <small class="float-sm-right"> 
-        <a href="{% url 'activitys:activity-list' %}" class="btn btn-primary"> List <i class="fa fa-list" aria-hidden="true"></i> </a>
-        </small>
+       Activity Details
+       {% url 'activities:activity-list' as ref_list_url %}
+       {% include 'includes/btn_list.html' with ref_url=ref_list_url %}
     </div>
 
     <div class="card-body">
@@ -127,7 +129,7 @@
     </div>
     <div class="card-footer">
         <small class="text-muted float-sm-right">
-        <a href="{{ object.get_absolute_url }}" class="btn btn-info"> Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
+        <a href="#" data-action-url="{{ object.get_absolute_url }}" class="btn btn-info btn-item-action"> Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
         </small>
     </div>
 </div>

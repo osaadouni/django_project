@@ -6,9 +6,10 @@
 <div class="card" style="width: 100%">
     <div class="card-header">
        Edit Project
-       {% include 'projects/includes/btn_list.html' %}
-
+       {% url "projects:project-list" as ref_list_url %}
+       {% include 'includes/btn_list.html' with ref_url=ref_list_url %}
     </div>
+
 
     <div class="card-body">
         <form method="post" enctype="multipart/form-data" class="form-input"  data-action-url="{% url 'projects:project-edit' project.pk %}">

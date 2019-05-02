@@ -1,21 +1,20 @@
-{% extends 'clients/base.html' %}
+{% extends 'includes/main_wrapper.html' %}
+{% load crispy_forms_tags %}
+{% block wrapper %}
 
-{% block content %}
-    
 <div class="card" style="width: 100%">
     <div class="card-header">
        Delete Client
-        <small class="float-sm-right">
-        <a href="{% url 'clients:client-list' %}" class="btn btn-primary"> List <i class="fa fa-list" aria-hidden="true"></i> </a>
-        </small>
+       {% url "clients:client-list" as ref_list_url %}
+       {% include 'includes/btn_list.html' with ref_url=ref_list_url %}
     </div>
         
     <div class="card-body">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data" class="form-input"  data-action-url="{% url 'clients:client-delete' client.pk %}">
             {% csrf_token %}
             <div class="alert alert-warning">Are you sure you want to delete "{{ object }}" ? </div>
             <small class="float-sm-right">
-                <a href="{% url 'clients:client-list' %}" class="btn btn-secondary"> Cancel <i class="fa fa-times" aria-hidden="true"></i> </a>
+                <a href="#" data-action-url="{% url 'clients:client-list' %}" class="btn btn-secondary btn-item-action"> Cancel <i class="fa fa-times" aria-hidden="true"></i> </a>
                 <button type="submit" class="btn btn-danger"> Yes <i class="fa fa-check" aria-hidden="true"></i></button>
             </small>
             

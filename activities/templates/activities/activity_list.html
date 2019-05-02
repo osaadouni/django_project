@@ -1,12 +1,14 @@
-{% extends 'activities/base.html' %}
+{% extends 'includes/main_wrapper.html' %} #}
 
-{% block content %}
+{% load crispy_forms_tags %}
+
+{% block wrapper %}
 
 <div class="card" style="width: 100%">
     <div class="card-header">
-        Activity list  
+        Activities
          <small class="float-sm-right">
-        <a href="{% url 'activities:activity-add' %}" class="btn btn-primary"> New Activity <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+        <a href="#" data-action-url="{% url 'activities:activity-add' %}" class="btn btn-primary btn-item-action"> New Activity <i class="fa fa-plus-square-o" aria-hidden="true"></i>
  </a>
         </small>
 
@@ -58,12 +60,10 @@
                     <td>{{ activity.created_at }}</td>
                     <td>{{ activity.updated_at }}</td>
                     <td>
-                        <a href="{% url 'activities:activity-view' activity.id %}" class="btn btn-info btn-sm">View <i class="fa fa-eye" aria-hidden="true"></i>
-                        {# <i class="fa fa-search-plus" aria-hidden="true"></i> #}
-
+                        <a href="#" data-action-url="{% url 'activities:activity-view' activity.id %}" class="btn btn-info btn-sm btn-item-action">View <i class="fa fa-eye" aria-hidden="true"></i>
                      </td>
-                    <td><a href="{% url 'activities:activity-edit' activity.id %}" class="btn btn-secondary btn-sm">Edit <i class="fa fa-pencil" aria-hidden="true"></i> </td>
-                    <td><a href="{% url 'activities:activity-delete' activity.id %}" class="btn btn-danger btn-sm">Delete <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    <td><a href="#" data-action-url="{% url 'activities:activity-edit' activity.id %}" class="btn btn-secondary btn-sm btn-item-action">Edit <i class="fa fa-pencil" aria-hidden="true"></i> </td>
+                    <td><a href="#" data-action-url="{% url 'activities:activity-delete' activity.id %}" class="btn btn-danger btn-sm btn-item-action">Delete <i class="fa fa-trash-o" aria-hidden="true"></i>
 </td>
                 </tr>
             {% endfor %}
@@ -76,27 +76,9 @@
 
         {# The pagination Section  #}
 
-       {% if is_paginated %}
-          <ul class="pagination">
-            {% if page_obj.has_previous %}
-              <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-            {% else %}
-              <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
-            {% endif %}
-            {% for i in paginator.page_range %}
-              {% if page_obj.number == i %}
-                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
-              {% else %}
-                <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
-              {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-              <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a></li>
-            {% else %}
-              <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
-            {% endif %}
-          </ul>
-        {% endif %}
+        {% url "activities:activity-list" as ref_url %}
+        {% include 'includes/pagination_records.html' with ref_url=ref_url %}
+
 
     </div>
 </div>

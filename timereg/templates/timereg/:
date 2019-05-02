@@ -1,0 +1,55 @@
+{% extends 'includes/main_wrapper.html' %} #}
+{% load crispy_forms_tags %}
+
+
+{% block wrapper %}
+
+<div class="card" style="width: 100%">
+    <div class="card-header">
+       New TimeReg
+       {% url "timereg:timereg-list" as ref_list_url %}
+       {% include 'includes/btn_list.html' with ref_url=ref_list_url %}
+    </div>
+
+    <div class="card-body">
+        <form method="post" data-action-url="{% url 'timereg:timereg-add' %}" enctype="multipart/form-data" class="form-input" novalidate>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <small class="float-sm-left">
+                <input type="button" id="id_btn_start" value="Start" class="btn btn-primary" />
+                <input type="button" id="id_btn_stop" value="Stop" class="btn btn-secondary" />
+                <input type="button" id="id_btn_reset" value="Reset" class="btn btn-dark" />
+            </small>
+            <small class="float-sm-right">
+                <input type="submit" value="Submit" class="btn btn-danger" />
+            </small>
+        </form>
+    </div>
+    <div class="card-footer">
+        <small class="text-muted float-sm-right">
+        </small>
+    </div>
+</div>
+
+
+<!-- datepicker js -->
+{{ form.media }}
+
+{% block javascript %}
+<script>
+console.log('hush hush');
+$(document).ready(function() { 
+
+   $('#id_btn_start').click(function(e){ 
+       alert('clicked');
+   });
+   
+});
+</script>
+{% endblock javascript %}
+
+{% endblock wrapper %}
+
+
+
+

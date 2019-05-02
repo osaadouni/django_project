@@ -1,16 +1,21 @@
 {# Load the tag library #}
 {% load static %}
+{% load bootstrap4 %}
 
 <!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
     <title>{% block title %}Django TimeReg{% endblock %}</title>
-     
+    <!--  
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    -->
+
+
     {# <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet"> #}
     <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet"> 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    {# <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> #}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
     {% block stylesheet %}{% endblock %}

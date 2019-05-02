@@ -1,12 +1,14 @@
-{% extends 'clients/base.html' %}
+    {% extends 'includes/main_wrapper.html' %} #}
 
-{% block content %}
+{% load crispy_forms_tags %}
+
+{% block wrapper %}
 
 <div class="card" style="width: 100%">
     <div class="card-header">
-        Client list  
+        Clients
          <small class="float-sm-right">
-        <a href="{% url 'clients:client-add' %}" class="btn btn-primary"> New Client <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+        <a href="#" data-action-url="{% url 'clients:client-add' %}" class="btn btn-primary btn-item-action"> New Client <i class="fa fa-plus-square-o" aria-hidden="true"></i>
  </a>
         </small>
 
@@ -14,71 +16,68 @@
 
     <div class="card-body">
 
+        <div class="row">
+        <div class="col">
+        <form method="post" data-action-url="{% url 'clients:client-list' %}" enctype="multipart/form-data" class="form-input">
+          {% csrf_token %}
+            {{ form|crispy }}
+            <small class="float-sm-right">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </small>
+        </form>
+        </div>
+        </div>
+
         {% if object_list %}
-
-        <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <td>ID</td>
-                <td>Full Company Name</td>
-                <td>Short Name</td>
-                <td>VAT Number</td>
-                <td>Created at</td>
-                <td>Updated at</td>
-                <td>View</td>
-                <td>Edit</td>
-                <td>Delete</td>
-            </tr>
-        </thead>
-
-        <tbody>
-            {% for client in object_list %}
+            <div class="row mt-5">
+            <div class="col">
+            <table class="table table-bordered table-striped">
+            <thead>
                 <tr>
-                    <td>{{ client.pk }}</td>
-                    <td>{{ client.company_name }}</td>
-                    <td>{{ client.name }}</td>
-                    <td>{{ client.vat_number }}</td>
-                    <td>{{ client.created_at }}</td>
-                    <td>{{ client.updated_at }}</td>
-                    <td>
-                        <a href="{% url 'clients:client-view' client.id %}" class="btn btn-info btn-sm">View <i class="fa fa-eye" aria-hidden="true"></i>
-                        {# <i class="fa fa-search-plus" aria-hidden="true"></i> #}
-
-                     </td>
-                    <td><a href="{% url 'clients:client-edit' client.id %}" class="btn btn-secondary btn-sm">Edit <i class="fa fa-pencil" aria-hidden="true"></i> </td>
-                    <td><a href="{% url 'clients:client-delete' client.id %}" class="btn btn-danger btn-sm">Delete <i class="fa fa-trash-o" aria-hidden="true"></i>
-</td>
+                    <td>ID</td>
+                    <td>Full Company Name</td>
+                    <td>Short Name</td>
+                    <td>VAT Number</td>
+                    <td>Created at</td>
+                    <td>Updated at</td>
+                    <td>View</td>
+                    <td>Edit</td>
+                    <td>Delete</td>
                 </tr>
-            {% endfor %}
-        </tbody>
-        </table>
+            </thead>
 
+            <tbody>
+                {% for client in object_list %}
+                    <tr>
+                        <td>{{ client.pk }}</td>
+                        <td>{{ client.company_name }}</td>
+                        <td>{{ client.name }}</td>
+                        <td>{{ client.vat_number }}</td>
+                        <td>{{ client.created_at }}</td>
+                        <td>{{ client.updated_at }}</td>
+                        <td>
+                            <a href="#" data-action-url="{% url 'clients:client-detail' client.id %}" class="btn btn-info btn-sm btn-item-action">View <i class="fa fa-eye" aria-hidden="true"></i>
+                         </td>
+                        <td><a href="#" data-action-url="{% url 'clients:client-edit' client.id %}" class="btn btn-secondary btn-sm btn-item-action">Edit <i class="fa fa-pencil" aria-hidden="true"></i> </td>
+                        <td><a href="#" data-action-url="{% url 'clients:client-delete' client.id %}" class="btn btn-danger btn-sm btn-item-action">Delete <i class="fa fa-trash-o" aria-hidden="true"></i>
+    </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            </div>
+            </div>
+        {%  else %}
+            <div class="alert alert-danger mt-5">
+                No clients found
+            </div>
         {% endif %}
-
 
         {# The pagination Section  #}
 
-       {% if is_paginated %}
-          <ul class="pagination">
-            {% if page_obj.has_previous %}
-              <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-            {% else %}
-              <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
-            {% endif %}
-            {% for i in paginator.page_range %}
-              {% if page_obj.number == i %}
-                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
-              {% else %}
-                <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
-              {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-              <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a></li>
-            {% else %}
-              <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
-            {% endif %}
-          </ul>
-        {% endif %}
+        {% url "clients:client-list" as ref_url %}
+        {% include 'includes/pagination_records.html' with ref_url=ref_url %}
+
 
     </div>
 </div>

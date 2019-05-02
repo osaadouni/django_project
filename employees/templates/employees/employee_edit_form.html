@@ -8,9 +8,9 @@
 <div class="card" style="width: 100%">
     <div class="card-header">
        Edit Employee
+       {% url 'employees:employee-list' as ref_list_url %}
+       {% include 'includes/btn_list.html' with ref_url=ref_list_url %}
 
-       {% include 'employees/includes/btn_list.html' %}
-        
     </div>
 
     <div class="card-body">

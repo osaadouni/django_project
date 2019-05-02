@@ -1,0 +1,81 @@
+{% extends 'includes/main_wrapper.html' %} #}
+
+{% load crispy_forms_tags %}
+
+{% block wrapper %}
+
+
+<div class="card" style="width: 100%">
+    <div class="card-header">
+        TimeRegs
+         <small class="float-sm-right">
+        <a href="#" data-action-url="{% url 'timereg:timereg-add' %}" class="btn btn-primary btn-item-action"> New TimeReg <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+ </a>
+        </small>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if object_list %}
+
+        <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Client</td>
+                <td>Project</td>
+                <td>Activity</td>
+                <td>Description</td>
+                <td>Bill</td>
+                <td>Date</td>
+                <td>Time</td>
+                <td>User</td>
+                <td>Created at</td>
+                <td>Updated at</td>
+                <td>View</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for timereg in object_list %}
+                <tr>
+                    <td>{{ timereg.pk }}</td>
+                    <td>{{ timereg.name }}</td>
+                    <td>{{ timereg.client }}</td>
+                    <td>{{ timereg.project }}</td>
+                    <td>{{ timereg.activity }}</td>
+                    <td>{{ timereg.description }}</td>
+                    <td>{{ timereg.bill }}</td>
+                    <td>{{ timereg.date }}</td>
+                    <td>{{ timereg.time }}</td>
+                    <td>{{ timereg.created_by }}</td>
+                    <td>{{ timereg.created_at }}</td>
+                    <td>{{ timereg.updated_at }}</td>
+                    <td>
+                        <a href="#" data-action-url="{% url 'timereg:timereg-detail' timereg.id %}" class="btn btn-info btn-sm btn-item-action">View <i class="fa fa-eye" aria-hidden="true"></i>
+                     </td>
+                    <td><a href="#" data-action-url="{% url 'timereg:timereg-edit' timereg.id %}" class="btn btn-secondary btn-sm btn-item-action">Edit <i class="fa fa-pencil" aria-hidden="true"></i> </td>
+
+                    <td><a href="#" data-action-url="{% url 'timereg:timereg-delete' timereg.id %}" class="btn btn-danger btn-sm btn-item-action">Delete <i class="fa fa-trash-o" aria-hidden="true"></i>
+</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+
+        {% endif %}
+
+
+        {# The pagination Section  #}
+
+        {% url "timereg:timereg-list" as ref_url %}
+        {% include 'includes/pagination_records.html' with ref_url=ref_url %}
+
+    </div>
+</div>
+
+{% endblock %}

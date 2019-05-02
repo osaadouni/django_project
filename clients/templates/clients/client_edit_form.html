@@ -1,20 +1,17 @@
-{% extends 'clients/base.html' %}
-
+{% extends 'includes/main_wrapper.html' %}
 {% load crispy_forms_tags %}
-
-{% block content %}
+{% block wrapper %}
 
 <div class="card" style="width: 100%">
     <div class="card-header">
        Edit Client
-        <small class="float-sm-right">
-        <a href="{% url 'clients:client-list' %}" class="btn btn-primary"> List <i class="fa fa-list" aria-hidden="true"></i> </a>
-
-        </small>
+       {% url "clients:client-list" as ref_list_url %}
+       {% include 'includes/btn_list.html' with ref_url=ref_list_url %}
     </div>
 
     <div class="card-body">
-        <form method="post" enctype="multipart/form-data">
+
+        <form method="post" enctype="multipart/form-data" class="form-input"  data-action-url="{% url 'clients:client-edit' client.pk %}">
             {% csrf_token %}
             {{ form|crispy }}
             <small class="float-sm-right">
